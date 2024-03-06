@@ -3,9 +3,12 @@ import store from "./redux/store";
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Home } from "./pages";
+import { CustomToaster } from "./components/CustomToaster";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function App() {
+
   // react-query client
   const queryClient = new QueryClient();
 
@@ -19,7 +22,7 @@ function App() {
     function (error) {
       // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
-      console.log(error);
+      toast.error(error.message);
       //return Promise.reject(error);
     }
   );
@@ -27,6 +30,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
+        <CustomToaster/>
         <Home />
       </Provider>
     </QueryClientProvider>
