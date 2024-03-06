@@ -1,6 +1,15 @@
-py -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
-run app: python manage.py runserver
-user: root
-password: rootpass
+> python -m venv venv
+> .\venv\Scripts\activate
+> pip install -r requirements.txt
+to create new migrations:
+    create your tables on models.py
+    > python manage.py makemigrate
+to run migrations:
+    > python manage.py migrate
+run app: 
+    > python manage.py runserver
+optional: create admin user to push data on your db
+    > python manage.py createsuperuser
+    user: root
+    email: root@admin.com
+    password: rootpass
