@@ -12,7 +12,7 @@ const CustomToaster: React.FC<CustomToasterProps> = () => {
         <Transition
           appear
           show={t.visible}
-          className="transform p-3 flex dark:text-white dark:bg-neutral-600 rounded-lg shadow-md"
+          className="transform p-3 flex bg-white dark:text-white dark:bg-gray-700 rounded-lg shadow-md"
           enter="transition-all duration-150"
           enterFrom="opacity-0 scale-50"
           enterTo="opacity-100 scale-100"

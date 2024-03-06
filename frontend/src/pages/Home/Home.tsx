@@ -1,6 +1,8 @@
-import { Loader } from "@/components/Loader";
-import { ThemeButton } from "@/components/ThemeButton";
+import { Skeleton } from "@/components/Skeleton";
+import { TaskCard } from "@/components/TaskCard";
+import { Task } from "@/models/task";
 import { getTasks } from "@/services/tasks";
+import { Layout } from "@/template/Layout";
 import { useQuery } from "react-query";
 
 export type HomeProps = {
@@ -8,15 +10,25 @@ export type HomeProps = {
 };
 
 const Home: React.FC<HomeProps> = () => {
-  const { isLoading, data } = useQuery("tasks", getTasks);
-  console.log(data);
+  const { data } = useQuery("tasks", getTasks);
   return (
-    <>
-      <Loader show={isLoading}/>
-      <div className="h-screen w-screen flex justify-center items-center dark:bg-neutral-900">
-        <ThemeButton />
+    <Layout>
+      <div className="container">
+        <div className="flex gap-4 flex-wrap items-center">
+          {data ? (
+            data?.data.map((task: Task) => <TaskCard {...task} />)
+          ) : (
+            <>
+              {Array(8)
+                .fill(8)
+                .map(() => (
+                  <Skeleton />
+                ))}
+            </>
+          )}
+        </div>
       </div>
-    </>
+    </Layout>
   );
 };
 
