@@ -7,7 +7,7 @@ export type CustomToasterProps = {
 
 const CustomToaster: React.FC<CustomToasterProps> = () => {
   return (
-    <Toaster>
+    <Toaster position="bottom-left">
       {(t) => (
         <Transition
           appear
@@ -21,7 +21,7 @@ const CustomToaster: React.FC<CustomToasterProps> = () => {
           leaveTo="opacity-0 scale-75"
         >
           <ToastIcon toast={t} />
-          <p className="px-3">{resolveValue(t.message, t)}</p>
+          <p className="px-3 text-sm">{resolveValue(t.message, t)}</p>
         </Transition>
       )}
     </Toaster>
