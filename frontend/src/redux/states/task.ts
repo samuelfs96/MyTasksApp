@@ -4,12 +4,21 @@ export const taskSlice = createSlice({
   name: "task_id",
   initialState: "",
   reducers: {
-    setId: (state, action) => {
+    setId: (_state, action) => {
+      return action.payload;
+    },
+  },
+});
+
+export const taskColorSlice = createSlice({
+  name: "task_color",
+  initialState: [],
+  reducers: {
+    setColor: (_state, action) => {
       return action.payload;
     },
   },
 });
 
 export const { setId } = taskSlice.actions;
-
-export default taskSlice.reducer;
+export const { setColor } = taskColorSlice.actions;
