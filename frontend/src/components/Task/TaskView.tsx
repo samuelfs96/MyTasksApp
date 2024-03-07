@@ -6,6 +6,7 @@ import { getTask } from "@/services/tasks";
 import { Skeleton } from "../Skeleton";
 import { getParseDate } from "@/utilities";
 import { Actions } from ".";
+import useChangeColor from "./Actions/hooks/useChangeColor";
 
 export type TaskViewProps = {
   // types...
@@ -13,18 +14,19 @@ export type TaskViewProps = {
 
 const TaskView: React.FC<TaskViewProps> = () => {
   const id = useSelector((store: AppStore) => store.task_id);
+  const { task_color } = useChangeColor({ task_id: id });
   const { data } = useQuery(["task", id], () => getTask(id));
   const { handleOpen } = useModal();
-
+  console.log("el color es: ", task_color);
   return (
     <div>
       {data ? (
         <div className="pt-4 px-4">
           <h1
-            className={` ${
+            className={`${
               data.data.completed
                 ? "line-through text-gray-400 dark:text-gray-400"
-                : "dark:text-white"
+                : `${task_color ? "" : "dark:text-white"}`
             } mb-1 text-lg font-bold`}
           >
             {data.data.title}
@@ -41,7 +43,7 @@ const TaskView: React.FC<TaskViewProps> = () => {
             className={`text-sm mb-2 ${
               data.data.completed
                 ? "line-through text-gray-400 dark:text-gray-400"
-                : "dark:text-white"
+                : `${task_color ? "" : "dark:text-white"}`
             }`}
           >
             {data.data.description}
@@ -51,7 +53,9 @@ const TaskView: React.FC<TaskViewProps> = () => {
               data.data.completed ? "line-through" : ""
             }`}
           >
-            {data.data.created_at ? 'Creada: ' + getParseDate(data.data.created_at) : ""}
+            {data.data.created_at
+              ? "Creada: " + getParseDate(data.data.created_at)
+              : ""}
           </p>
         </div>
       ) : (

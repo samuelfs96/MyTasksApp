@@ -4,6 +4,7 @@ import useModal from "../Modal/hooks/useModal";
 import { useDispatch } from "react-redux";
 import { setId } from "@/redux/states";
 import { Actions } from ".";
+import useChangeColor from "./Actions/hooks/useChangeColor";
 
 export type TaskContentProps = {
   id: string;
@@ -22,6 +23,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
 }) => {
   const { handleOpen } = useModal();
   const dispatch = useDispatch();
+  const { task_color } = useChangeColor({ task_id: id });
   const handleOpenModal = useCallback(() => {
     dispatch(setId(id));
     handleOpen(true);
@@ -35,7 +37,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
             className={` ${
               completed
                 ? "line-through text-gray-400 dark:text-gray-400"
-                : "dark:text-white"
+                : `${task_color ? "" : "dark:text-white"}`
             } mb-1 text-lg font-bold`}
           >
             {title}
@@ -45,7 +47,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
               completed ? "line-through" : ""
             }`}
           >
-            {created_at ? getParseDate(created_at) : ""}
+            {created_at ? "Creada: " + getParseDate(created_at) : ""}
           </p>
         </div>
         <div className="p-4">
@@ -53,7 +55,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
             className={` text-sm ${
               completed
                 ? "line-through text-gray-400 dark:text-gray-400"
-                : "dark:text-white"
+                : `${task_color ? "" : "dark:text-white"}`
             }`}
           >
             {description}

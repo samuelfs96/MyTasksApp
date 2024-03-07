@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setColor } from "@/redux/states";
 import { useMemo } from "react";
 
-const COLORS = ["red", "blue", "yellow", "green"];
 interface ChangeColorType {
   task_id?: string;
 }
@@ -23,14 +22,15 @@ function useChangeColor({ task_id }: ChangeColorType) {
     )
       ? tasks_colored
       : tasks_colored.filter((tc: { id: string }) => tc.id !== task_id);
-    dispatch(setColor([...filter_tasks, { id: task_id, color: color }]));
+
+    if (color === "default") dispatch(setColor(filter_tasks));
+    else dispatch(setColor([...filter_tasks, { id: task_id, color: color }]));
   };
 
   return {
     handleChangeColor,
     tasks_colored,
     task_color,
-    COLORS,
   };
 }
 
