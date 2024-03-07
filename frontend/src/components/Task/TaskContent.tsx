@@ -1,9 +1,9 @@
 import { getParseDate } from "@/utilities";
 import React, { useCallback } from "react";
-import Actions from "./Actions";
 import useModal from "../Modal/hooks/useModal";
 import { useDispatch } from "react-redux";
 import { setId } from "@/redux/states";
+import { Actions } from ".";
 
 export type TaskContentProps = {
   id: string;
@@ -60,7 +60,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
           </p>
         </div>
       </div>
-      <Actions completed={completed} />
+      <Actions task_id={id} completed={completed} />
     </>
   );
 };

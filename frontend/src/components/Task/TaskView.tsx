@@ -4,8 +4,8 @@ import { AppStore } from "@/redux/store";
 import { useQuery } from "react-query";
 import { getTask } from "@/services/tasks";
 import { Skeleton } from "../Skeleton";
-import { Actions } from ".";
 import { getParseDate } from "@/utilities";
+import { Actions } from ".";
 
 export type TaskViewProps = {
   // types...
@@ -68,7 +68,7 @@ const TaskView: React.FC<TaskViewProps> = () => {
         </>
       )}
       <div className="flex justify-between">
-        <Actions completed={data?.data.completed} persist />
+        <Actions task_id={id} completed={data?.data.completed} persist />
         <div className="pb-4 px-4 flex justify-center items-center">
           <button
             className="px-3 py-1 bg-slate-200 rounded-md text-sm"
