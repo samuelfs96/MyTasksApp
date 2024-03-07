@@ -2,6 +2,7 @@ import { Modal } from "@/components/Modal";
 import useModal from "@/components/Modal/hooks/useModal";
 import { Skeleton } from "@/components/Skeleton";
 import { TaskContent } from "@/components/Task";
+import TaskView from "@/components/Task/TaskView";
 import { TaskCard } from "@/components/TaskCard";
 import { Task } from "@/models/task";
 import { getTasks } from "@/services/tasks";
@@ -12,34 +13,32 @@ export type HomeProps = {
   // types...
 };
 
+const SKE_COUNT = 8;
+
 const Home: React.FC<HomeProps> = () => {
   const { data } = useQuery("tasks", getTasks);
   const { open, handleOpen } = useModal();
   return (
     <Layout>
       <Modal open={open} onClose={() => handleOpen(false)}>
-        <TaskCard style={{width: '100%'}}>
-          <p>Titulo</p>
-          <p>Descripcion</p>
-          <div className="flex justify-end p-4">
-          <button onClick={() => handleOpen(false)}>cerrar</button>
-          </div>
+        <TaskCard style={{ width: "100%" }}>
+          <TaskView />
         </TaskCard>
       </Modal>
       <div className="container">
         <div className="flex gap-4 flex-wrap items-center">
           {data ? (
             data?.data.map((task: Task) => (
-              <TaskCard>
+              <TaskCard key={task.id}>
                 <TaskContent {...task} />
               </TaskCard>
             ))
           ) : (
             <>
-              {Array(8)
-                .fill(8)
-                .map(() => (
-                  <Skeleton />
+              {Array(SKE_COUNT)
+                .fill(SKE_COUNT)
+                .map((_item, key) => (
+                  <Skeleton key={key} style={{ width: "23%", height: 200 }} />
                 ))}
             </>
           )}

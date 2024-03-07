@@ -1,8 +1,9 @@
-"use client";
 import { getParseDate } from "@/utilities";
-import React from "react";
+import React, { useCallback } from "react";
 import Actions from "./Actions";
 import useModal from "../Modal/hooks/useModal";
+import { useDispatch } from "react-redux";
+import { setId } from "@/redux/states";
 
 export type TaskContentProps = {
   id: string;
@@ -20,7 +21,12 @@ const TaskContent: React.FC<TaskContentProps> = ({
   created_at,
 }) => {
   const { handleOpen } = useModal();
-  const handleOpenModal = () => handleOpen(true);
+  const dispatch = useDispatch();
+  const handleOpenModal = useCallback(() => {
+    dispatch(setId(id));
+    handleOpen(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   return (
     <>
       <div onClick={handleOpenModal}>
@@ -39,7 +45,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
               completed ? "line-through" : ""
             }`}
           >
-            {getParseDate(created_at || new Date())}
+            {created_at ? getParseDate(created_at) : ""}
           </p>
         </div>
         <div className="p-4">
@@ -54,7 +60,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
           </p>
         </div>
       </div>
-      <Actions completed={completed} id={id} />
+      <Actions completed={completed} />
     </>
   );
 };
