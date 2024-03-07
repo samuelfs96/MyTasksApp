@@ -13,3 +13,8 @@ optional: create admin user to push data on your db
     user: root
     email: root@admin.com
     password: rootpass
+urls:
+    api: http://localhost:8000/tasks/api/v1/
+    api documentation: http://localhost:8000/tasks/docs/
+
+    cliente: http://localhost:5173/
