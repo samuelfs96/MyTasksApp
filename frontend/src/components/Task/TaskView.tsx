@@ -13,11 +13,12 @@ export type TaskViewProps = {
 };
 
 const TaskView: React.FC<TaskViewProps> = () => {
+  
   const id = useSelector((store: AppStore) => store.task_id);
   const { task_color } = useChangeColor({ task_id: id });
   const { data } = useQuery(["task", id], () => getTask(id));
   const { handleOpen } = useModal();
-  console.log("el color es: ", task_color);
+
   return (
     <div>
       {data ? (

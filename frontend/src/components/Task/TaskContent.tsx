@@ -21,6 +21,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
   completed,
   created_at,
 }) => {
+  
   const { handleOpen } = useModal();
   const dispatch = useDispatch();
   const { task_color } = useChangeColor({ task_id: id });
@@ -29,6 +30,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
     handleOpen(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
   return (
     <>
       <div onClick={handleOpenModal}>

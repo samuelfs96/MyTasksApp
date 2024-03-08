@@ -41,7 +41,7 @@ const Home: React.FC<HomeProps> = () => {
         onClose={() => handleOpenConfirmation(false)}
       />
       <div className="container">
-        <div className="flex gap-4 flex-wrap items-center">
+        <div className="flex gap-4 flex-wrap items-center max-lg:flex-col">
           {data ? (
             data?.data.map((task: Task) => (
               <TaskCard key={task.id} task_id={task.id}>

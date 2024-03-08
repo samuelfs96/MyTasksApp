@@ -25,6 +25,10 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
         } transition-opacity dark:text-white`}
       >
         <button
+          onClick={() => {
+            dispatch(setId(task_id));
+            console.log('finalizar tarea')
+          }}
           title="finalizar tarea"
           className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"
         >
