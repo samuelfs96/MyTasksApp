@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useChangeColor from "./hooks/useChangeColor";
 import { ColorPicker } from "@/components/ColorPicker";
+import { useDispatch } from "react-redux";
+import { setId } from "@/redux/states";
 
 export type ActionsProps = {
   task_id: string;
@@ -11,6 +13,7 @@ export type ActionsProps = {
 const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const { handleChangeColor } = useChangeColor({ task_id });
+  const dispatch = useDispatch();
 
   return (
     <div className="relative">
@@ -26,7 +29,10 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
           {!completed ? "✔" : "❌"}
         </button>
         <button
-          onClick={() => setOpenDropdown((prevState) => !prevState)}
+          onClick={() => {
+            dispatch(setId(task_id)) 
+            setOpenDropdown((prevState) => !prevState)
+          }}
           title="cambiar color"
           className="flex justify-center items-center hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"
         >

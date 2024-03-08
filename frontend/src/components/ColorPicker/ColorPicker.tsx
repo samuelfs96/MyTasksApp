@@ -1,6 +1,9 @@
 import { ClickOutside } from "@/components/ClickOutside";
+import { AppStore } from "@/redux/store";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import useChangeColor from "@/components/Task/Actions/hooks/useChangeColor";
 
 export type ColorPickerProps = {
   open: boolean;
@@ -13,6 +16,8 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   handleChange,
   handleClose,
 }) => {
+  const id = useSelector((store: AppStore) => store.task_id);
+  const { task_color } = useChangeColor({ task_id: id });
   const COLORS = useMemo(
     () => [
       "default",
@@ -44,9 +49,8 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                     key={color}
                     onClick={() => {
                       handleChange(color);
-                      handleClose();
                     }}
-                    className={`w-10 h-10 rounded-full border-2 cursor-pointer hover:border-slate-900 ${
+                    className={`w-10 h-10 rounded-full border-2 cursor-pointer hover:brightness-90 ${task_color?.color === color ? 'brightness-75 border-slate-400' : '' } ${
                       color === "default" ? "bg-gray-100" : color
                     }`}
                   />
