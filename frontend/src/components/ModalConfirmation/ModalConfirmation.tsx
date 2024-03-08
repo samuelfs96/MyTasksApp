@@ -2,6 +2,9 @@ import { Modal } from "@/components/Modal";
 import { AppStore } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { ClickOutside } from "../ClickOutside";
+import { useMutation, useQuery } from "react-query";
+import { deleteTask, getTasks } from "@/services/tasks";
+import toast from "react-hot-toast";
 
 export type ModalConfirmationProps = {
   // types...
@@ -13,7 +16,24 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
   open,
   onClose,
 }) => {
+  const { refetch } = useQuery("tasks", getTasks);
   const task_id = useSelector((store: AppStore) => store.task_id);
+  const deleteTaskMutation = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: (data) => {
+      if (data) {
+        toast.success(data.data.message);
+        refetch();
+      }
+    },
+    onError({ response }) {
+      toast.error(response.data.message);
+    },
+  });
+  const handleDeleteTask = (taskId: string) => {
+    deleteTaskMutation.mutate(taskId);
+    onClose();
+  };
   return (
     <Modal open={open} onClose={onClose}>
       <ClickOutside
@@ -35,14 +55,13 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
           transition-colors`}
         onClickOutside={onClose}
       >
-        <h1 className="text-lg font-bold mb-12 dark:text-white">¿Desea eliminar esta tarea?</h1>
+        <h1 className="text-lg font-bold mb-12 dark:text-white">
+          ¿Desea eliminar esta tarea?
+        </h1>
         <div className="flex gap-2 justify-end">
           <button
             className="dark:bg-slate-600 dark:hover:bg-slate-700 dark:text-white flex gap-3 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-slate-50 text-sm hover:bg-slate-100"
-            onClick={() => {
-              console.log("la tarea :", task_id);
-              onClose();
-            }}
+            onClick={() => handleDeleteTask(task_id)}
           >
             ✔ <span>Si</span>
           </button>

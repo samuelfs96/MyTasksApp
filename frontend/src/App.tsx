@@ -8,7 +8,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 function App() {
-
   // react-query client
   const queryClient = new QueryClient();
 
@@ -22,15 +21,16 @@ function App() {
     function (error) {
       // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
-      toast.error(error.message);
-      //return Promise.reject(error);
+      if (error.code === "ERR_NETWORK") toast.error("Error en el servicio");
+      //else toast.error(error.response.data.message);
+      return Promise.reject(error);
     }
   );
 
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <CustomToaster/>
+        <CustomToaster />
         <Home />
       </Provider>
     </QueryClientProvider>
