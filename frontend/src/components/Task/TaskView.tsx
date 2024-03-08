@@ -75,10 +75,11 @@ const TaskView: React.FC<TaskViewProps> = () => {
         <Actions task_id={id} completed={data?.data.completed} persist />
         <div className="pb-4 px-4 flex justify-center items-center">
           <button
-            className="px-3 py-1 bg-slate-200 rounded-md text-sm"
+            className={`${task_color ? "" : "dark:text-white"} flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
             onClick={() => handleOpen(false)}
           >
-            Cerrar
+            ❌
+            <span>Cerrar</span>
           </button>
         </div>
       </div>

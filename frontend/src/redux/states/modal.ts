@@ -9,7 +9,15 @@ export const modalSlice = createSlice({
     },
   },
 });
+export const modalConfirmationSlice = createSlice({
+  name: "open_confirmation",
+  initialState: false,
+  reducers: {
+    openConfirmationModal: (_state, action) => {
+      return action.payload;
+    },
+  },
+});
 
 export const { openModal } = modalSlice.actions;
-
-export default modalSlice.reducer;
+export const { openConfirmationModal } = modalConfirmationSlice.actions;

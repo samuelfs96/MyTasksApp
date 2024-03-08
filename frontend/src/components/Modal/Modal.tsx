@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ children, open, onClose }) => {
             transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
           >
             <ClickOutside
-              className="relative w-full max-w-2xl max-h-full"
+              className="relative w-full max-w-xl max-h-full flex justify-center"
               onClickOutside={onClose}
             >
               {children}
