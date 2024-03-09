@@ -1,16 +1,12 @@
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import "./App.css";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { Home } from "./pages";
 import { CustomToaster } from "./components/CustomToaster";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 function App() {
-  // react-query client
-  const queryClient = new QueryClient();
-
   // Add a response interceptor to handle errors
   axios.interceptors.response.use(
     function (response) {
@@ -28,12 +24,10 @@ function App() {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <CustomToaster />
-        <Home />
-      </Provider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <CustomToaster />
+      <Home />
+    </Provider>
   );
 }
 
