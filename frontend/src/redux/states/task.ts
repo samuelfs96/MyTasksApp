@@ -1,4 +1,4 @@
-import { LocalStorageTypes } from "@/models";
+import { LocalStorageTypes, Task } from "@/models";
 import { getLocalStorage, setLocalStorage } from "@/utilities";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -25,5 +25,18 @@ export const taskColorSlice = createSlice({
   },
 });
 
+const initial_tasks_data: Task[] = [];
+
+export const tasksSlice = createSlice({
+  name: "tasks",
+  initialState: initial_tasks_data,
+  reducers: {
+    setTasksData: (_state, action) => {
+      return action.payload;
+    },
+  },
+});
+
 export const { setId } = taskSlice.actions;
 export const { setColor } = taskColorSlice.actions;
+export const { setTasksData } = tasksSlice.actions;
