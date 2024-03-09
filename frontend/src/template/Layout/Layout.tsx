@@ -7,7 +7,7 @@ export type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="dark:bg-slate-900 transition-colors min-h-screen flex flex-col justify-between">
+    <div className="dark:bg-slate-900 gap-8 min-h-screen flex flex-col justify-between">
       <Navbar />
       {children}
       <Footer />

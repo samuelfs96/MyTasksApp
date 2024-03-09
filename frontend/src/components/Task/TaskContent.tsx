@@ -33,7 +33,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
   return (
     <>
       <div onClick={handleOpenModal}>
-        {title.length > 0 && description.length > 0 ? (
+        {(title.length > 0 && description.length > 0) ? (
           <>
             <div className="pt-4 px-4">
               <h1
@@ -41,7 +41,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
                   completed
                     ? "line-through text-gray-400 dark:text-gray-400"
                     : `${task_color ? "" : "dark:text-white"}`
-                } mb-1 text-lg font-bold`}
+                } mb-1 text-lg font-bold text-slate-600`}
               >
                 {title}
               </h1>
@@ -55,7 +55,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
             </div>
             <div className="p-4">
               <p
-                className={` text-sm ${
+                className={`text-slate-600 text-sm ${
                   completed
                     ? "line-through text-gray-400 dark:text-gray-400"
                     : `${task_color ? "" : "dark:text-white"}`
@@ -72,9 +72,9 @@ const TaskContent: React.FC<TaskContentProps> = ({
                   completed
                     ? "line-through text-gray-400 dark:text-gray-400"
                     : `${task_color ? "" : "dark:text-white"}`
-                } mb-1 text-2xl font-semibold`}
+                } mb-1 text-xl font-semibold text-slate-600`}
               >
-                Nota vacía
+                Nota incompleta
               </h1>
           </div>
         )}

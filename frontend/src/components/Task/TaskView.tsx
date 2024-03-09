@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import useTask from "@/hooks/useTask";
 import { Task } from "@/models";
 import { Formik, Field, Form } from "formik";
+import { DocumentPlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export type TaskViewProps = {
   task_id: string;
@@ -65,7 +66,7 @@ const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
           <div className="flex flex-col">
             {!loading ? (
               <Field
-                className={`pt-4 px-4 appearance-none bg-transparent outline-none ${
+                className={`text-slate-600 pt-4 px-4 appearance-none bg-transparent outline-none ${
                   task.completed
                     ? "line-through text-gray-400 dark:text-gray-400"
                     : `${task_color ? "" : "dark:text-white"}`
@@ -85,11 +86,11 @@ const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
               <div className="p-4 scrollbar-thumb-slate-400 scrollbar-track-transparent">
                 <Field
                   as="textarea"
-                  className={`scrollbar overflow-y-auto w-full min-h-40 appearance-none bg-transparent outline-none ${
+                  className={`text-slate-600 scrollbar overflow-y-auto w-full min-h-40 appearance-none bg-transparent outline-none ${
                     task.completed
                       ? "line-through text-gray-400 dark:text-gray-400"
                       : `${task_color ? "" : "dark:text-white"}`
-                  } mb-1 text-lg font-bold`}
+                  } mb-1 text-md font-semibold`}
                   id="description"
                   name="description"
                   value={values.description}
@@ -139,7 +140,9 @@ const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
                 } flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
                 type="submit"
               >
-                ➕ <span>Crear tarea</span>
+                <DocumentPlusIcon className={`h-5 w-5 text-slate-600 ${
+                  task_color ? "" : "dark:text-white"
+                }`}/> <span>Crear tarea</span>
               </button>
               <button
                 type="button"
@@ -148,7 +151,9 @@ const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
                 } flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
                 onClick={() => handleOpen(false)}
               >
-                ❌<span>Cerrar</span>
+                <XMarkIcon className={`h-5 w-5 text-slate-600 ${
+                  task_color ? "" : "dark:text-white"
+                }`}/> <span>Cerrar</span>
               </button>
             </div>
           </div>

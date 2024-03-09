@@ -5,7 +5,7 @@ export type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = () => {
-  return <div className="p-4 flex justify-end">
+  return <div className="p-6 flex justify-end shadow-sm">
 	<ThemeButton />
   </div>;
 };

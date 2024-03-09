@@ -1,5 +1,7 @@
 import useTheme from "@/hooks/useTheme";
-import { useEffect } from "react";
+import { MoonIcon } from "@heroicons/react/16/solid";
+import { SunIcon } from "@heroicons/react/24/outline";
+import { useEffect, useMemo } from "react";
 
 export type ThemeButtonProps = {
   // types...
@@ -7,6 +9,13 @@ export type ThemeButtonProps = {
 
 const ThemeButton: React.FC<ThemeButtonProps> = () => {
   const { handleChangeTheme, theme } = useTheme();
+  const RenderIcon = useMemo(() => {
+    return theme === "dark" ? (
+      <MoonIcon className="h-5 w-5 text-slate-600" />
+    ) : (
+      <SunIcon className="h-5 w-5 text-slate-600" />
+    );
+  }, [theme]);
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -16,10 +25,21 @@ const ThemeButton: React.FC<ThemeButtonProps> = () => {
   }, [theme]);
   return (
     <button
+      className="ring-black 
+      dark:ring-slate-800
+      ring-opacity-5
+      ring-1 
+      border 
+      border-transparent
+      shadow-sm
+      group
+      select-none
+      transition-colors
+      hover:shadow-md 
+      w-10 h-10 flex justify-center items-center rounded-full"
       onClick={handleChangeTheme}
-      className="bg-gray-200 hover:bg-gray-300 rounded-md text-sm py-2 px-6 hover:border-gray-400 border-2 dark:text-white dark:bg-neutral-600"
     >
-      dark mode
+      {RenderIcon}
     </button>
   );
 };

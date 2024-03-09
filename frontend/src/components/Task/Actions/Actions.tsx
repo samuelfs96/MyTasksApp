@@ -5,6 +5,12 @@ import { useDispatch } from "react-redux";
 import { setId } from "@/redux/states";
 import { useModalConfirmation } from "@/components/ModalConfirmation";
 import useTask from "@/hooks/useTask";
+import {
+  ClipboardDocumentCheckIcon,
+  DocumentCheckIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import { SwatchIcon } from "@heroicons/react/16/solid";
 
 export type ActionsProps = {
   task_id: string;
@@ -14,7 +20,7 @@ export type ActionsProps = {
 
 const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
-  const { handleChangeColor } = useChangeColor({ task_id });
+  const { handleChangeColor, task_color } = useChangeColor({ task_id });
   const { handleOpen } = useModalConfirmation();
   const { updateTask } = useTask();
   const dispatch = useDispatch();
@@ -36,9 +42,21 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
           type="button"
           onClick={handleCompleteTask}
           title="finalizar tarea"
-          className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"
+          className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer flex items-center justify-center"
         >
-          {!completed ? "✔" : "❌"}
+          {!completed ? (
+            <DocumentCheckIcon
+              className={`h-5 w-5 text-slate-600 ${
+                task_color ? "" : "dark:text-white"
+              }`}
+            />
+          ) : (
+            <ClipboardDocumentCheckIcon
+              className={`h-5 w-5 text-slate-600 ${
+                task_color ? "" : "dark:text-white"
+              }`}
+            />
+          )}
         </button>
         <button
           type="button"
@@ -47,9 +65,13 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
             setOpenDropdown((prevState) => !prevState);
           }}
           title="cambiar color"
-          className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"
+          className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer flex items-center justify-center"
         >
-          🎨
+          <SwatchIcon
+            className={`h-5 w-5 text-slate-600 ${
+              task_color ? "" : "dark:text-white"
+            }`}
+          />
         </button>
         <button
           type="button"
@@ -58,9 +80,13 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
             handleOpen(true);
           }}
           title="eliminar tarea"
-          className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"
+          className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer flex items-center justify-center"
         >
-          🗑
+          <TrashIcon
+            className={`h-5 w-5 text-slate-600 ${
+              task_color ? "" : "dark:text-white"
+            }`}
+          />
         </button>
       </div>
       <ColorPicker

@@ -46,7 +46,7 @@ const Home: React.FC<HomeProps> = () => {
         onClose={() => handleOpenConfirmation(false)}
       />
       <div className="container">
-        <div className="flex gap-4 flex-wrap items-center max-lg:flex-col">
+        <div className="flex gap-4 flex-wrap items-center justify-center max-lg:flex-col">
           {!loading ? (
             <>
               <CreateTask />
