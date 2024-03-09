@@ -1,7 +1,7 @@
 import { setTasksData } from "@/redux/states";
 import { useDispatch, useSelector } from "react-redux";
 import { AppStore } from "@/redux/store";
-import { getApiTasks, updateApiTask, deleteApiTask, getApiTask } from "@/services/tasks";
+import { createApiTask, getApiTasks, updateApiTask, deleteApiTask, getApiTask } from "@/services/tasks";
 import toast from "react-hot-toast";
 import { useState } from "react";
 
@@ -9,6 +9,18 @@ function useTask() {
   const tasks = useSelector((store: AppStore) => store.tasks);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const createTask = async (req: any) => {
+    await createApiTask(req)
+      .then(({data: {data, message}}) => {
+        toast.success(message);
+        dispatch(setTasksData(data));
+      })
+      .catch(({response: {data}}) => {
+        toast.error(data.message);
+        return;
+      });
+  };
   const getTasks = () => {
     setLoading(true)
     getApiTasks()
@@ -62,6 +74,7 @@ function useTask() {
 
   return {
     tasks,
+    createTask,
     getTasks,
     getTask,
     updateTask,

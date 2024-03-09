@@ -27,14 +27,14 @@ const initial_state: Task = {
 const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
   const [task, setTask] = useState(initial_state);
   const { task_color } = useChangeColor({ task_id: task_id });
-  const { getTask, loading, setLoading, tasks, updateTask } = useTask();
+  const { createTask, getTask, loading, setLoading, tasks, updateTask } = useTask();
   const { handleOpen } = useModal();
 
   const handleSubmit = (values: RequestData) => {
     if(task_id){
       updateTask(task_id, values).then(() => handleOpen(false))
     }else{
-      console.log('crear tarea', values)
+      createTask(values).then(() => handleOpen(false))
     }
   }
 

@@ -33,6 +33,7 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
         } transition-opacity dark:text-white`}
       >
         <button
+          type="button"
           onClick={handleCompleteTask}
           title="finalizar tarea"
           className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"
@@ -40,6 +41,7 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
           {!completed ? "✔" : "❌"}
         </button>
         <button
+          type="button"
           onClick={() => {
             dispatch(setId(task_id));
             setOpenDropdown((prevState) => !prevState);
@@ -50,6 +52,7 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
           🎨
         </button>
         <button
+          type="button"
           onClick={() => {
             dispatch(setId(task_id));
             handleOpen(true);
