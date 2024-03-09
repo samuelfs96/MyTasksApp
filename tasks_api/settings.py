@@ -39,11 +39,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # modules
     'corsheaders',
-    'rest_framework',
+    'rest_framework', 
+    'rest_framework.authtoken', 
+    'rest_auth',
     'coreapi',
+    #para inicio de sesión social
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     # my app here
     'tasks_app'
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

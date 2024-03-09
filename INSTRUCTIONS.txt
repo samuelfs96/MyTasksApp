@@ -3,7 +3,7 @@
 > pip install -r requirements.txt
 to create new migrations:
     create your tables on models.py
-    > python manage.py makemigrate
+    > python manage.py makemigrations
 to run migrations:
     > python manage.py migrate
 run app: 
@@ -14,6 +14,7 @@ optional: create admin user to push data on your db
     email: root@admin.com
     password: rootpass
 urls:
+    admin: http://localhost:8000/admin/
     api: http://localhost:8000/tasks/api/v1/
     api documentation: http://localhost:8000/tasks/docs/
 

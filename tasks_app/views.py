@@ -3,9 +3,14 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
+
 from .serializer import TaskSerializer
 from .models import Task
 
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
 
 class TaskView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
