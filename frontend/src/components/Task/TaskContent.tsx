@@ -21,48 +21,63 @@ const TaskContent: React.FC<TaskContentProps> = ({
   completed,
   created_at,
 }) => {
-  
   const { handleOpen } = useModal();
   const dispatch = useDispatch();
   const { task_color } = useChangeColor({ task_id: id });
   const handleOpenModal = useCallback(() => {
     dispatch(setId(id));
     handleOpen(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (
     <>
       <div onClick={handleOpenModal}>
-        <div className="pt-4 px-4">
-          <h1
-            className={` ${
-              completed
-                ? "line-through text-gray-400 dark:text-gray-400"
-                : `${task_color ? "" : "dark:text-white"}`
-            } mb-1 text-lg font-bold`}
-          >
-            {title}
-          </h1>
-          <p
-            className={`text-xs text-gray-500 ${
-              completed ? "line-through" : ""
-            }`}
-          >
-            {created_at ? "Creada: " + getParseDate(created_at) : ""}
-          </p>
-        </div>
-        <div className="p-4">
-          <p
-            className={` text-sm ${
-              completed
-                ? "line-through text-gray-400 dark:text-gray-400"
-                : `${task_color ? "" : "dark:text-white"}`
-            }`}
-          >
-            {description}
-          </p>
-        </div>
+        {title.length > 0 && description.length > 0 ? (
+          <>
+            <div className="pt-4 px-4">
+              <h1
+                className={` ${
+                  completed
+                    ? "line-through text-gray-400 dark:text-gray-400"
+                    : `${task_color ? "" : "dark:text-white"}`
+                } mb-1 text-lg font-bold`}
+              >
+                {title}
+              </h1>
+              <p
+                className={`text-xs text-gray-500 ${
+                  completed ? "line-through" : ""
+                }`}
+              >
+                {created_at ? "Creada: " + getParseDate(created_at) : ""}
+              </p>
+            </div>
+            <div className="p-4">
+              <p
+                className={` text-sm ${
+                  completed
+                    ? "line-through text-gray-400 dark:text-gray-400"
+                    : `${task_color ? "" : "dark:text-white"}`
+                }`}
+              >
+                {description}
+              </p>
+            </div>
+          </>
+        ) : (
+          <div className="p-4">
+            <h1
+                className={` ${
+                  completed
+                    ? "line-through text-gray-400 dark:text-gray-400"
+                    : `${task_color ? "" : "dark:text-white"}`
+                } mb-1 text-2xl font-semibold`}
+              >
+                Nota vacía
+              </h1>
+          </div>
+        )}
       </div>
       <Actions task_id={id} completed={completed} />
     </>

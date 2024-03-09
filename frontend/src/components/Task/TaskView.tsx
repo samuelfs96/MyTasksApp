@@ -82,9 +82,10 @@ const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
               </div>
             )}
             {!loading ? (
-              <div className="p-4">
+              <div className="p-4 scrollbar-thumb-slate-400 scrollbar-track-transparent">
                 <Field
-                  className={`appearance-none bg-transparent outline-none ${
+                  as="textarea"
+                  className={`scrollbar overflow-y-auto w-full min-h-40 appearance-none bg-transparent outline-none ${
                     task.completed
                       ? "line-through text-gray-400 dark:text-gray-400"
                       : `${task_color ? "" : "dark:text-white"}`
