@@ -1,3 +1,4 @@
+import { CreateTask } from "@/components/CreateTask";
 import { Modal } from "@/components/Modal";
 import useModal from "@/components/Modal/hooks/useModal";
 import {
@@ -22,7 +23,6 @@ export type HomeProps = {
 const SKE_COUNT = 8;
 
 const Home: React.FC<HomeProps> = () => {
-
   const { getTasks, tasks, loading } = useTask();
   const { open, handleOpen } = useModal();
   const { handleOpen: handleOpenConfirmation, open: openConfirmation } =
@@ -31,7 +31,7 @@ const Home: React.FC<HomeProps> = () => {
 
   useEffect(() => {
     getTasks();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -48,11 +48,14 @@ const Home: React.FC<HomeProps> = () => {
       <div className="container">
         <div className="flex gap-4 flex-wrap items-center max-lg:flex-col">
           {!loading ? (
-            tasks.map((task: Task) => (
-              <TaskCard key={task.id} task_id={task.id}>
-                <TaskContent {...task} />
-              </TaskCard>
-            ))
+            <>
+              <CreateTask />
+              {tasks.map((task: Task) => (
+                <TaskCard key={task.id} task_id={task.id}>
+                  <TaskContent {...task} />
+                </TaskCard>
+              ))}
+            </>
           ) : (
             <>
               {Array(SKE_COUNT)

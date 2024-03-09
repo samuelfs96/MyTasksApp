@@ -4,9 +4,10 @@ export type TaskCardProps = {
   task_id?: string;
   children: React.ReactNode;
   style?: React.CSSProperties;
+  onClick?: () => void;
 };
 
-const TaskCard: React.FC<TaskCardProps> = ({ children, style, task_id }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ children, style, task_id, onClick }) => {
   const { task_color } = useChangeColor({ task_id });
   return (
     <>
@@ -31,6 +32,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ children, style, task_id }) => {
           select-none
           transition-colors
           hover:shadow-md`}
+        onClick={onClick}
       >
         {children}
       </div>
