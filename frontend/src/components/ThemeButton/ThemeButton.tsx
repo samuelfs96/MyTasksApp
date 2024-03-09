@@ -11,7 +11,7 @@ const ThemeButton: React.FC<ThemeButtonProps> = () => {
   const { handleChangeTheme, theme } = useTheme();
   const RenderIcon = useMemo(() => {
     return theme === "dark" ? (
-      <MoonIcon className="h-5 w-5 text-slate-600" />
+      <MoonIcon className="h-5 w-5 text-white" />
     ) : (
       <SunIcon className="h-5 w-5 text-slate-600" />
     );
@@ -26,7 +26,7 @@ const ThemeButton: React.FC<ThemeButtonProps> = () => {
   return (
     <button
       className="ring-black 
-      dark:ring-slate-800
+      dark:ring-slate-700
       ring-opacity-5
       ring-1 
       border 
