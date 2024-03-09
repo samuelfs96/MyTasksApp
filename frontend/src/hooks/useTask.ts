@@ -35,10 +35,11 @@ function useTask() {
     }
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateTask = (id: string, req: any) => {
-    updateApiTask(id, req)
-      .then(({ data }) => {
+  const updateTask = async (id: string, req: any) => {
+    await updateApiTask(id, req)
+      .then(({ data: {data, message} }) => {
         console.log("Tarea: " + id + " status actualizado");
+        toast.success(message);
         dispatch(setTasksData(data));
       })
       .catch(({response: {data}}) => {
