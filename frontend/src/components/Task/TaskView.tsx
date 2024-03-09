@@ -8,30 +8,35 @@ import useTask from "@/hooks/useTask";
 import { Task } from "@/models";
 
 export type TaskViewProps = {
-  task_id: string
+  task_id: string;
 };
 
-const TaskView: React.FC<TaskViewProps> = ({task_id}) => {
-  const initial_state: Task = {
-    id: '',
-    title: '',
-    description: '',
-    completed: false,
-    created_at: new Date
-  }
-  const [task, setTask] = useState(initial_state)
+const initial_state: Task = {
+  id: "",
+  title: "",
+  description: "",
+  completed: false,
+  created_at: new Date(),
+};
+
+const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
+  const [task, setTask] = useState(initial_state);
   const { task_color } = useChangeColor({ task_id: task_id });
+  const { getTask, loading, setLoading, tasks } = useTask();
   const { handleOpen } = useModal();
-  const { getTask, loading, setLoading } = useTask();
 
   useEffect(() => {
-    if(task_id)
+    if (task_id)
       getTask(task_id).then((data) => {
-        if(data) setTask(data?.data)
-        else setLoading(true)
-      })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [task_id])
+        if (data) setTask(data?.data);
+        else setLoading(true);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task_id]);
+
+  useEffect(() => {
+    setTask((prev) => tasks.find((task) => task.id === prev.id) || prev);
+  }, [tasks]);
 
   return (
     <div>
@@ -68,9 +73,7 @@ const TaskView: React.FC<TaskViewProps> = ({task_id}) => {
               task.completed ? "line-through" : ""
             }`}
           >
-            {task.created_at
-              ? "Creada: " + getParseDate(task.created_at)
-              : ""}
+            {task.created_at ? "Creada: " + getParseDate(task.created_at) : ""}
           </p>
         </div>
       ) : (
@@ -90,11 +93,12 @@ const TaskView: React.FC<TaskViewProps> = ({task_id}) => {
         <Actions task_id={task_id} completed={task.completed} persist />
         <div className="pb-4 px-4 flex justify-center items-center">
           <button
-            className={`${task_color ? "" : "dark:text-white"} flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
+            className={`${
+              task_color ? "" : "dark:text-white"
+            } flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
             onClick={() => handleOpen(false)}
           >
-            ❌
-            <span>Cerrar</span>
+            ❌<span>Cerrar</span>
           </button>
         </div>
       </div>
