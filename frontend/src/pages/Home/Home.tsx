@@ -8,11 +8,11 @@ import { Skeleton } from "@/components/Skeleton";
 import { TaskContent } from "@/components/Task";
 import TaskView from "@/components/Task/TaskView";
 import { TaskCard } from "@/components/TaskCard";
+import useTask from "@/hooks/useTask";
 import { Task } from "@/models/task";
 import { AppStore } from "@/redux/store";
-import { getTasks } from "@/services/tasks";
 import { Layout } from "@/template/Layout";
-import { useQuery } from "react-query";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 export type HomeProps = {
@@ -22,18 +22,23 @@ export type HomeProps = {
 const SKE_COUNT = 8;
 
 const Home: React.FC<HomeProps> = () => {
-  const { data } = useQuery("tasks", getTasks);
+
+  const { getTasks, tasks, loading } = useTask();
   const { open, handleOpen } = useModal();
-  const {
-    handleOpen: handleOpenConfirmation,
-    open: openConfirmation,
-  } = useModalConfirmation();
+  const { handleOpen: handleOpenConfirmation, open: openConfirmation } =
+    useModalConfirmation();
   const task_id = useSelector((store: AppStore) => store.task_id);
+
+  useEffect(() => {
+    getTasks();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Layout>
       <Modal open={open} onClose={() => handleOpen(false)}>
         <TaskCard style={{ width: "100%" }} task_id={task_id}>
-          <TaskView />
+          <TaskView task_id={task_id} />
         </TaskCard>
       </Modal>
       <ModalConfirmation
@@ -42,8 +47,8 @@ const Home: React.FC<HomeProps> = () => {
       />
       <div className="container">
         <div className="flex gap-4 flex-wrap items-center max-lg:flex-col">
-          {data ? (
-            data?.data.map((task: Task) => (
+          {!loading ? (
+            tasks.map((task: Task) => (
               <TaskCard key={task.id} task_id={task.id}>
                 <TaskContent {...task} />
               </TaskCard>

@@ -1,7 +1,7 @@
 import { setTasksData } from "@/redux/states";
 import { useDispatch, useSelector } from "react-redux";
 import { AppStore } from "@/redux/store";
-import { getApiTasks, updateApiTask } from "@/services/tasks";
+import { getApiTasks, updateApiTask, deleteApiTask, getApiTask } from "@/services/tasks";
 import toast from "react-hot-toast";
 import { useState } from "react";
 
@@ -22,8 +22,17 @@ function useTask() {
         return;
       });
   };
-  const getTask = (id) => {
-    //---
+  const getTask = async (id: string) => {
+    setLoading(true)
+    try {
+      const res = await getApiTask(id);
+      setLoading(false)
+      return res
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      setLoading(false)
+      toast.error(e.message);
+    }
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateTask = (id: string, req: any) => {
@@ -37,8 +46,17 @@ function useTask() {
         return;
       });
   };
-  const deleteTask = (id) => {
-    //---
+  const deleteTask = async (id: string) => {
+    await deleteApiTask(id)
+      .then(({ data }) => {
+        console.log("Tarea: " + id + " eliminada");
+        toast.success(data.message);
+        getTasks();
+      })
+      .catch(({response: {data}}) => {
+        toast.error(data.message);
+        return;
+      });
   };
 
   return {

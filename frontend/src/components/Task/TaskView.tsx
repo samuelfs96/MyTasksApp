@@ -1,36 +1,50 @@
-import { useSelector } from "react-redux";
 import { useModal } from "../Modal";
-import { AppStore } from "@/redux/store";
-import { useQuery } from "react-query";
-import { getTask } from "@/services/tasks";
 import { Skeleton } from "../Skeleton";
 import { getParseDate } from "@/utilities";
 import { Actions } from ".";
 import useChangeColor from "./Actions/hooks/useChangeColor";
+import { useEffect, useState } from "react";
+import useTask from "@/hooks/useTask";
+import { Task } from "@/models";
 
 export type TaskViewProps = {
-  // types...
+  task_id: string
 };
 
-const TaskView: React.FC<TaskViewProps> = () => {
-  
-  const id = useSelector((store: AppStore) => store.task_id);
-  const { task_color } = useChangeColor({ task_id: id });
-  const { data } = useQuery(["task", id], () => getTask(id));
+const TaskView: React.FC<TaskViewProps> = ({task_id}) => {
+  const initial_state: Task = {
+    id: '',
+    title: '',
+    description: '',
+    completed: false,
+    created_at: new Date
+  }
+  const [task, setTask] = useState(initial_state)
+  const { task_color } = useChangeColor({ task_id: task_id });
   const { handleOpen } = useModal();
+  const { getTask, loading, setLoading } = useTask();
+
+  useEffect(() => {
+    if(task_id)
+      getTask(task_id).then((data) => {
+        if(data) setTask(data?.data)
+        else setLoading(true)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task_id])
 
   return (
     <div>
-      {data ? (
+      {!loading ? (
         <div className="pt-4 px-4">
           <h1
             className={`${
-              data.data.completed
+              task.completed
                 ? "line-through text-gray-400 dark:text-gray-400"
                 : `${task_color ? "" : "dark:text-white"}`
             } mb-1 text-lg font-bold`}
           >
-            {data.data.title}
+            {task.title}
           </h1>
         </div>
       ) : (
@@ -38,24 +52,24 @@ const TaskView: React.FC<TaskViewProps> = () => {
           <Skeleton style={{ width: "100%", height: "2rem" }} />
         </div>
       )}
-      {data ? (
+      {!loading ? (
         <div className="p-4">
           <p
             className={`text-sm mb-2 ${
-              data.data.completed
+              task.completed
                 ? "line-through text-gray-400 dark:text-gray-400"
                 : `${task_color ? "" : "dark:text-white"}`
             }`}
           >
-            {data.data.description}
+            {task.description}
           </p>
           <p
             className={`text-xs text-right text-gray-500 ${
-              data.data.completed ? "line-through" : ""
+              task.completed ? "line-through" : ""
             }`}
           >
-            {data.data.created_at
-              ? "Creada: " + getParseDate(data.data.created_at)
+            {task.created_at
+              ? "Creada: " + getParseDate(task.created_at)
               : ""}
           </p>
         </div>
@@ -73,7 +87,7 @@ const TaskView: React.FC<TaskViewProps> = () => {
         </>
       )}
       <div className="flex justify-between">
-        <Actions task_id={id} completed={data?.data.completed} persist />
+        <Actions task_id={task_id} completed={task.completed} persist />
         <div className="pb-4 px-4 flex justify-center items-center">
           <button
             className={`${task_color ? "" : "dark:text-white"} flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}

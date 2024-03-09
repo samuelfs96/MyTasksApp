@@ -4,6 +4,7 @@ import { ColorPicker } from "@/components/ColorPicker";
 import { useDispatch } from "react-redux";
 import { setId } from "@/redux/states";
 import { useModalConfirmation } from "@/components/ModalConfirmation";
+import useTask from "@/hooks/useTask";
 
 export type ActionsProps = {
   task_id: string;
@@ -14,8 +15,15 @@ export type ActionsProps = {
 const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const { handleChangeColor } = useChangeColor({ task_id });
-  const {handleOpen} = useModalConfirmation();
+  const { handleOpen } = useModalConfirmation();
+  const { updateTask } = useTask();
   const dispatch = useDispatch();
+
+  const handleCompleteTask = () => {
+    updateTask(task_id, {
+      completed: !completed,
+    });
+  };
 
   return (
     <div className="relative">
@@ -25,10 +33,7 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
         } transition-opacity dark:text-white`}
       >
         <button
-          onClick={() => {
-            dispatch(setId(task_id));
-            console.log('finalizar tarea')
-          }}
+          onClick={handleCompleteTask}
           title="finalizar tarea"
           className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"
         >
@@ -47,7 +52,7 @@ const Actions: React.FC<ActionsProps> = ({ task_id, completed, persist }) => {
         <button
           onClick={() => {
             dispatch(setId(task_id));
-            handleOpen(true)
+            handleOpen(true);
           }}
           title="eliminar tarea"
           className="hover:bg-black hover:bg-opacity-10 w-9 h-9 rounded-full cursor-pointer"

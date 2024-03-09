@@ -2,9 +2,7 @@ import { Modal } from "@/components/Modal";
 import { AppStore } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { ClickOutside } from "../ClickOutside";
-import { useMutation, useQuery } from "react-query";
-import { deleteTask, getTasks } from "@/services/tasks";
-import toast from "react-hot-toast";
+import useTask from "@/hooks/useTask";
 
 export type ModalConfirmationProps = {
   // types...
@@ -16,23 +14,10 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
   open,
   onClose,
 }) => {
-  const { refetch } = useQuery("tasks", getTasks);
+  const { deleteTask } = useTask();
   const task_id = useSelector((store: AppStore) => store.task_id);
-  const deleteTaskMutation = useMutation({
-    mutationFn: deleteTask,
-    onSuccess: (data) => {
-      if (data) {
-        toast.success(data.data.message);
-        refetch();
-      }
-    },
-    onError({ response }) {
-      toast.error(response.data.message);
-    },
-  });
   const handleDeleteTask = (taskId: string) => {
-    deleteTaskMutation.mutate(taskId);
-    onClose();
+    deleteTask(taskId).then(() => onClose());
   };
   return (
     <Modal open={open} onClose={onClose}>
