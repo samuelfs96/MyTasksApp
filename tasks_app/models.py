@@ -8,7 +8,7 @@ class Task(models.Model):
          primary_key = True,
          default = uuid.uuid4,
          editable = False)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200,blank=True)
     description = models.TextField(blank=True)
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=datetime.utcnow)
