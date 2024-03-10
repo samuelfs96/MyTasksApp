@@ -20,6 +20,7 @@ from tasks_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rest-auth/google/', views.GoogleLogin.as_view(), name='google_login'),
+    path('auth/google/', views.GoogleLogin.as_view(), name='google_login'),
+    path('auth/apple/', views.AppleLogin.as_view(), name='apple_login'),
     path('tasks/', include('tasks_app.urls')),
 ]
