@@ -15,6 +15,10 @@ import { AppStore } from "@/redux/store";
 import { Layout } from "@/template/Layout";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { LoginSocialGoogle } from "reactjs-social-login";
+import { GoogleLoginButton } from "react-social-login-buttons";
+import useSocialAuth from "@/hooks/useSocialAuth";
+import { CLIENT_ID } from "@/services/socialAuth";
 
 export type HomeProps = {
   // types...
@@ -28,6 +32,8 @@ const Home: React.FC<HomeProps> = () => {
   const { handleOpen: handleOpenConfirmation, open: openConfirmation } =
     useModalConfirmation();
   const task_id = useSelector((store: AppStore) => store.task_id);
+
+  const { googleLogin } = useSocialAuth();
 
   useEffect(() => {
     getTasks();
@@ -46,6 +52,13 @@ const Home: React.FC<HomeProps> = () => {
         onClose={() => handleOpenConfirmation(false)}
       />
       <div className="container">
+        <LoginSocialGoogle
+          isOnlyGetToken={true}
+          client_id={CLIENT_ID}
+          onResolve={googleLogin}
+        >
+          <GoogleLoginButton />
+        </LoginSocialGoogle>
         <div className="flex gap-4 flex-wrap items-center justify-center max-lg:flex-col">
           {!loading ? (
             <>

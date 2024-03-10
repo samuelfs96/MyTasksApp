@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const api_url = "http://localhost:8000/tasks/api/v1/tasks";
+// tasks service
+
+const api_base_url = process.env.REACT_APP_API_URL;
+const api_url = api_base_url + '/tasks/api/v1/tasks';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createApiTask = async (request: any) => await axios.post(api_url + "/", request);

@@ -24,10 +24,10 @@ function App() {
   );
 
   return (
-    <Provider store={store}>
-      <CustomToaster />
-      <Home />
-    </Provider>
+      <Provider store={store}>
+        <CustomToaster />
+        <Home />
+      </Provider>
   );
 }
 
