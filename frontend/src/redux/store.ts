@@ -6,10 +6,8 @@ import {
   taskColorSlice,
   modalConfirmationSlice,
   tasksSlice,
-  socialUserSlice,
 } from "./states";
 import { Task } from "@/models";
-import { SocialUser } from "@/models/social_user";
 
 export interface AppStore {
   theme: string;
@@ -19,7 +17,6 @@ export interface AppStore {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   task_color: any;
   tasks: Task[];
-  social_user: SocialUser;
 }
 
 export default configureStore<AppStore>({
@@ -30,6 +27,5 @@ export default configureStore<AppStore>({
     task_id: taskSlice.reducer,
     task_color: taskColorSlice.reducer,
     tasks: tasksSlice.reducer,
-    social_user: socialUserSlice.reducer,
   },
 });
