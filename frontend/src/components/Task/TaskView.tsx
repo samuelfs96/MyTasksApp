@@ -137,18 +137,18 @@ const TaskView: React.FC<TaskViewProps> = ({ task_id }) => {
               <button
                 className={`${
                   task_color ? "" : "dark:text-white"
-                } flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
+                } flex gap-1 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
                 type="submit"
               >
                 <DocumentPlusIcon className={`h-5 w-5 text-slate-600 ${
                   task_color ? "" : "dark:text-white"
-                }`}/> <span>Crear tarea</span>
+                }`}/> <span className="max-sm:hidden">{task_id ? 'Guardar cambios' : 'Crear tarea'}</span>
               </button>
               <button
                 type="button"
                 className={`${
                   task_color ? "" : "dark:text-white"
-                } flex gap-2 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
+                } flex gap-1 rounded-md py-2 px-4 ring-black ring-opacity-5 ring-1 shadow-sm bg-transparent text-sm hover:backdrop-brightness-90`}
                 onClick={() => handleOpen(false)}
               >
                 <XMarkIcon className={`h-5 w-5 text-slate-600 ${

@@ -17,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   return (
     <div className="p-6 flex justify-between shadow-sm">
       {/* <SocialAuthUser social_user={social_user} /> */}
-      <div className="flex">
+      <div className="flex max-lg:flex-col">
         <LoginSocialGoogle
           isOnlyGetToken={true}
           client_id={GOOGLE_CLIENT_ID}

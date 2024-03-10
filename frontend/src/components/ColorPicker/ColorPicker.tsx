@@ -25,7 +25,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       "bg-iyellow",
       "bg-ired",
       "bg-iblue",
-      "bg-ipurple",
+      "bg-ipeach",
     ],
     []
   );

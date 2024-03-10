@@ -1,10 +1,11 @@
 import { getParseDate } from "@/utilities";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import useModal from "../Modal/hooks/useModal";
 import { useDispatch } from "react-redux";
 import { setId } from "@/redux/states";
 import { Actions } from ".";
 import useChangeColor from "./Actions/hooks/useChangeColor";
+import { PencilSquareIcon } from "@heroicons/react/16/solid";
 
 export type TaskContentProps = {
   id: string;
@@ -55,7 +56,7 @@ const TaskContent: React.FC<TaskContentProps> = ({
             </div>
             <div className="p-4">
               <p
-                className={`text-slate-600 text-sm ${
+                className={`whitespace-pre-line text-slate-600 text-sm ${
                   completed
                     ? "line-through text-gray-400 dark:text-gray-400"
                     : `${task_color ? "" : "dark:text-white"}`
@@ -68,13 +69,13 @@ const TaskContent: React.FC<TaskContentProps> = ({
         ) : (
           <div className="p-4">
             <h1
-                className={` ${
+                className={`flex items-center gap-2 ${
                   completed
                     ? "line-through text-gray-400 dark:text-gray-400"
                     : `${task_color ? "" : "dark:text-white"}`
                 } mb-1 text-xl font-semibold text-slate-600`}
               >
-                Nota incompleta
+                <PencilSquareIcon className="w-5 h-5"/> <span>Tarea incompleta</span>
               </h1>
           </div>
         )}

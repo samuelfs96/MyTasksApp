@@ -46,12 +46,12 @@ const Home: React.FC<HomeProps> = () => {
         onClose={() => handleOpenConfirmation(false)}
       />
       <div className="container">
-        <div className="flex gap-4 flex-wrap items-center justify-center max-lg:flex-col">
+        <div className="flex gap-4 flex-wrap items-center max-lg:flex-col">
           {!loading ? (
             <>
               <CreateTask />
               {tasks.map((task: Task) => (
-                <TaskCard key={task.id} task_id={task.id}>
+                <TaskCard key={task.id} task_id={task.id} task_completed={task.completed}>
                   <TaskContent {...task} />
                 </TaskCard>
               ))}
