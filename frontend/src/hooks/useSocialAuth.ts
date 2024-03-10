@@ -1,16 +1,24 @@
+import { setSocialUserData } from "@/redux/states";
 import { googleApiLogin } from "@/services/socialAuth";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { IResolveParams } from "reactjs-social-login";
 
 function useSocialAuth() {
-  const googleLogin = ({data}: IResolveParams) => {
+  const dispatch = useDispatch();
+  const googleLogin = ({ data }: IResolveParams) => {
     googleApiLogin(data)
-      .then(({data: {key}}) => {
-        console.log('Sesion iniciada con exito: '+ key)
-        toast.success('Sesion iniciada con exito');
+      .then((res) => {
+        const {
+          user: { extra_data },
+        } = res.data;
+        console.log("Sesion iniciada con exito: ", extra_data);
+        dispatch(setSocialUserData(extra_data));
+        toast.success("Sesion iniciada con exito");
       })
-      .catch(({ response: { data } }) => {
-        toast.error(data.message);
+      .catch((error) => {
+        console.log(error);
+        //toast.error(data.message);
         return;
       });
   };
