@@ -19,8 +19,8 @@ export const socialUserSlice = createSlice({
     ? JSON.parse(getLocalStorage(LocalStorageTypes.SOCIAL_USER) as string)
     : initialState,
   reducers: {
-    setSocialUserData: (state, action) => {
-      setLocalStorage(LocalStorageTypes.SOCIAL_USER, state);
+    setSocialUserData: (_state, action) => {
+      setLocalStorage(LocalStorageTypes.SOCIAL_USER, action.payload);
       return action.payload;
     },
   },
