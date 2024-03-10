@@ -72,7 +72,7 @@ This will site your terminal on a private  environment for the current project.
 
 ![](./step1.png)
 
-* Now go to the social apps template and click add, select your provider and add your name, client id and secret key from your google or apple OAuth credentials, save and repeat for the other provider, something like this: 
+* Now go to the social apps template and click add, select your provider and add your name, client id and secret key from your google or apple OAuth credentials, and your site localhost:8000, save and repeat for the other provider, something like this: 
 
 ![](./step2.png)
 
