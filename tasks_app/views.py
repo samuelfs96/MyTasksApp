@@ -4,13 +4,22 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.models import SocialAccount
 from rest_auth.registration.views import SocialLoginView
 
-from .serializer import TaskSerializer
+from .serializer import TaskSerializer, SocialAccountSerializer
 from .models import Task
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
+    
+    def get_response(self):
+        response = super().get_response()
+        if response.status_code == status.HTTP_200_OK:
+            user = self.request.user
+            social_account = SocialAccount.objects.get(user=user)
+            response.data.update({"user": SocialAccountSerializer(social_account).data})
+        return response
 
 class TaskView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
