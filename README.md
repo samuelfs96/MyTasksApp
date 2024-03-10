@@ -2,14 +2,20 @@
 
 This is an application to create tasks or notes, taking google keep as a reference, it allows you to login with google and apple. It is made with django rest framework and react.
 
-### Screenshot
+## Screenshot
+
+#### Desktop
 
 ![](./screenshot_desktop.png)
 
+#### Mobile
+
+![](./screenshot_mobile.png)
+
 ## Requirements
 
-* Python 3
-* Node
+* [Python](https://www.python.org/)
+* [Node](https://nodejs.org/)
 
 ## Run project
 
